@@ -1,0 +1,153 @@
+<?php
+array_shift($argv);
+$arguments = $argv;
+$arguments_counter = $argc - 1;
+$tabA = [];
+$tabB = [];
+
+createTabA($tabA);
+rb($tabB);
+//mySort($tabA, $tabB);
+//GoodSort($tabA, $tabB);
+function createTabA(&$tabA)
+{
+    global $arguments;
+    global $arguments_counter;
+    for ($i = 0; $i < $arguments_counter; $i++) {
+        $tabA[$i] = $arguments[$i];
+    }
+    return $tabA;
+}
+
+function swap(&$x, &$y)
+{
+    $temp = $x;
+    $x = $y;
+    $y = $temp;
+}
+
+function sa(&$tabA)
+{
+    if (count($tabA) > 1) {
+        swap($tabA[0], $tabA[1]);
+        print(' sa');
+    }
+    return $tabA;
+
+}
+
+function sb(&$tabB)
+{
+    if (count($tabB) > 1) {
+        swap($tabB[0], $tabB[1]);
+        print(' sb');
+        return $tabB;
+    }
+    return 0;
+}
+
+function sc(&$tabA, &$tabB)
+{
+    sa($tabA);
+    sb($tabB);
+}
+
+function pa(&$tabA, &$tabB, $i)
+{
+    array_unshift($tabA, $tabB[$i]);
+    $tab = array_shift($tabB);
+    print(' pa');
+    return $tabA;
+}
+
+function pb(&$tabA, &$tabB, $i)
+{
+    array_unshift($tabB, $tabA[$i]);
+    $tab = array_shift($tabA);
+    print(' pb');
+    return $tabB;
+}
+
+
+function ra(&$tabA)
+{
+    $head = $tabA[0];
+    unset($tabA[0]);
+    array_push($tabA[] = $head);
+    print(' ra');
+    return $tabA;
+}
+
+function rb(&$tabB)
+{
+    $head = $tabB[0];
+    unset($tabB[0]);
+    array_push($tabB[] = $head);
+    print(' rb');
+    return $tabB;
+}
+
+function rr(&$tabA, &$tabB)
+{
+    ra($tabA);
+    rb($tabB);
+}
+
+function rra(&$tabA)
+{
+    $tail = end($tabA);
+    array_pop($tabA);
+    array_unshift($tabA, $tail);
+    print(' rra');
+    return $tabA;
+}
+
+function rrb(&$tabB)
+{
+    $tail = end($tabB);
+    array_pop($tabB);
+    array_unshift($tabB, $tail);
+    print(' rrb');
+    return $tabB;
+}
+
+function rrr(&$tabA, &$tabB)
+{
+    rra($tabA);
+    rrb($tabB);
+}
+
+function mySort(&$tabA, &$tabB)
+{
+    $count = count($tabA);
+    for ($i = 0; $i < $count; $i++) {
+        $val = $tabA[$i];
+        $j = $i - 1;
+        while ($j >= 0 && $tabA[$j] > $val) {
+            $tabA[$j + 1] = $tabA[$j];
+            $j--;
+        }
+        $tabA[$j + 1] = $val;
+    }
+    print_r($tabA);
+    return $tabA;
+
+}
+
+function GoodSort(&$tabA, &$tabB)
+{
+    $sizeA = count($tabA) - 1;
+    for ($i = 0; $i < $sizeA; $i++) {
+        rra($tabA);
+//        if ($tabA[0] === min($tabA)) {
+//            pb($tabA, $tabB, 0);
+//        } else {
+//            rra($tabA);
+//        }
+    }
+    print("  TAB A ");
+    print_r($tabA);
+    PHP_EOL;
+    print("  TAB B ");
+    print_r($tabB);
+}
